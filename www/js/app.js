@@ -4,7 +4,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic'])
+var app = angular.module('starter', ['ionic', 'starter.notestore'])
 
 
 
@@ -27,13 +27,16 @@ app.run(function($ionicPlatform) {
 });
 
 
-
-var notes = [];
+    
+    
+//old version notes//   
+    
+// var notes = [];
     
     /*[{id: '1', title: 'First Note', description: 'This is my first note'},
                     {id: '2', title: 'Second Note', description: 'This is my second note'}]; */  
 
-
+/*
 function getNote(noteId) {
     for (var i = 0; i < notes.length; i++){
         if (notes[i].id === noteId)
@@ -58,32 +61,32 @@ function updateNote(note) {
       notes.push(note);  
     }
 
+*/
 
-
-app.controller('ListCtrl', function($scope) {
+app.controller('ListCtrl', function($scope, NoteStore) {
     
-    $scope.notes = notes;
+    $scope.notes = NoteStore.list();
 });
 
 
-app.controller('EditCtrl', function($scope, $state){
+app.controller('EditCtrl', function($scope, $state, NoteStore){
                
-     $scope.note = angular.copy(getNote($state.params.noteId));
+     $scope.note = angular.copy(NoteStore.get($state.params.noteId));
     
     $scope.save = function (){
-        updateNote($scope.note);
+        NoteStore.update($scope.note);
         $state.go('list');
     };
 });
     
-app.controller('AddCtrl', function($scope, $state){
+app.controller('AddCtrl', function($scope, $state, NoteStore){
                
      $scope.note = {id: new Date().getDate().toString(),
                     title: '',
                    description: ''};
     
     $scope.save = function (){
-        createNote($scope.note);
+        NoteStore.create($scope.note);
         $state.go('list');
     };
 });    
