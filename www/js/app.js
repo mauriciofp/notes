@@ -66,6 +66,10 @@ function updateNote(note) {
 app.controller('ListCtrl', function($scope, NoteStore) {
     
     $scope.notes = NoteStore.list();
+    
+    $scope.remove = function(noteId){
+        NoteStore.remove(noteId);
+    };
 });
 
 
@@ -81,7 +85,7 @@ app.controller('EditCtrl', function($scope, $state, NoteStore){
     
 app.controller('AddCtrl', function($scope, $state, NoteStore){
                
-     $scope.note = {id: new Date().getDate().toString(),
+     $scope.note = {id: new Date().getTime().toString(),
                     title: '',
                    description: ''};
     

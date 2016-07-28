@@ -1,13 +1,16 @@
 <ion-view view-title="My notes">
      <ion-content ng-controller="ListCtrl">
-     <div class="padding">
-         <a href="#/add" class="button button-block button-calm">New note</a>
-     </div>
-      <div class="list">
-        <a href="#/edit/{{note.id}}" class="item" ng-repeat="note in notes">
+      <ion-list>
+        <ion-item class="item-remove-animate item-icon-right" href="#/edit/{{note.id}}" 
+         ng-repeat="note in notes track by note.id">
           <h2>{{note.title}}</h2> 
           <p>{{note.description}}</p>
-        </a>  
-      </div>
+          <i class="icon ion-arrow-right-b"></i>
+          <ion-option-button class="button-assertive icon-list ion-trash-b" ng-click="remove(note.id)">Delete</ion-option-button>
+        </ion-item>  
+      </ion-list>
       </ion-content>
+      <div class="bar bar-footer bar-stable">
+          <a href="#/add" class="button button-calm icon-left ion-compose">New note</a>
+      </div>
 </ion-view>
