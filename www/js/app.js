@@ -65,10 +65,21 @@ function updateNote(note) {
 
 app.controller('ListCtrl', function($scope, NoteStore) {
     
+    
+    $scope.reordering = false;
     $scope.notes = NoteStore.list();
     
     $scope.remove = function(noteId){
         NoteStore.remove(noteId);
+    };
+    
+    $scope.move = function(note, fromIndex, toIndex){
+    //console.log('Moving from' + fromIndex + 'to' + toIndex);
+    NoteStore.move(note, fromIndex, toIndex);
+    };
+    
+    $scope.toggleReordering = function(){
+        $scope.reordering = !$scope.reordering;
     };
 });
 
@@ -81,6 +92,8 @@ app.controller('EditCtrl', function($scope, $state, NoteStore){
         NoteStore.update($scope.note);
         $state.go('list');
     };
+    
+    
 });
     
 app.controller('AddCtrl', function($scope, $state, NoteStore){
